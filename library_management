@@ -1,0 +1,189 @@
+
+
+# Node class for Book record
+class BookNode:
+    def __init__(self, book_id, title, author, status="Available"):
+        self.book_id = book_id
+        self.title = title
+        self.author = author
+        self.status = status
+        self.next = None  # Pointer to next node
+
+
+# Singly Linked List class for managing books
+class LinkedList:
+    def __init__(self):
+        self.head = None
+
+    # Insert a new book
+    def insertBook(self, book_id, title, author):
+        new_book = BookNode(book_id, title, author)
+        if not self.head:
+            self.head = new_book
+        else:
+            temp = self.head
+            while temp.next:
+                temp = temp.next
+            temp.next = new_book
+        print(f" Book '{title}' added successfully.\n")
+
+    # Delete a book using BookID
+    def deleteBook(self, book_id):
+        temp = self.head
+        prev = None
+        while temp:
+            if temp.book_id == book_id:
+                if prev:
+                    prev.next = temp.next
+                else:
+                    self.head = temp.next
+                print(f"🗑️ Book ID {book_id} deleted.\n")
+                return
+            prev = temp
+            temp = temp.next
+        print("  Book not found.\n")
+
+    # Search for a book
+    def searchBook(self, book_id):
+        temp = self.head
+        while temp:
+            if temp.book_id == book_id:
+                print(f"🔍 Found: {temp.title} by {temp.author} [{temp.status}]")
+                return temp
+            temp = temp.next
+        print(" Book not found.\n")
+        return None
+
+    # Display all books
+    def displayBooks(self):
+        temp = self.head
+        if not temp:
+            print(" No books available.\n")
+            return
+        print("\n--- Library Books ---")
+        while temp:
+            print(f"ID: {temp.book_id} | Title: {temp.title} | Author: {temp.author} | Status: {temp.status}")
+            temp = temp.next
+        print("---------------------\n")
+
+
+# Stack class for transaction history
+class Stack:
+    def __init__(self):
+        self.stack = []
+
+    def push(self, transaction):
+        self.stack.append(transaction)
+
+    def pop(self):
+        if not self.stack:
+            return None
+        return self.stack.pop()
+
+    def display(self):
+        if not self.stack:
+            print(" No transactions yet.\n")
+            return
+        print("\n--- Transaction History ---")
+        for t in reversed(self.stack):
+            print(t)
+        print("----------------------------\n")
+
+
+# Main Library System
+class LibrarySystem:
+    def __init__(self):
+        self.books = LinkedList()
+        self.transactions = Stack()
+
+    def issueBook(self, book_id):
+        book = self.books.searchBook(book_id)
+        if book and book.status == "Available":
+            book.status = "Issued"
+            self.transactions.push(("issue", book_id))
+            print(f" Book '{book.title}' issued.\n")
+        else:
+            print(" Book not available or not found.\n")
+
+    def returnBook(self, book_id):
+        book = self.books.searchBook(book_id)
+        if book and book.status == "Issued":
+            book.status = "Available"
+            self.transactions.push(("return", book_id))
+            print(f"📗 Book '{book.title}' returned.\n")
+        else:
+            print(" Invalid return operation.\n")
+
+    def undoTransaction(self):
+        last = self.transactions.pop()
+        if not last:
+            print(" No transaction to undo.\n")
+            return
+        action, book_id = last
+        book = self.books.searchBook(book_id)
+        if book:
+            if action == "issue":
+                book.status = "Available"
+                print(f" Undo: Book '{book.title}' marked as Available again.\n")
+            elif action == "return":
+                book.status = "Issued"
+                print(f" Undo: Book '{book.title}' marked as Issued again.\n")
+
+    def viewTransactions(self):
+        self.transactions.display()
+
+
+# ----------- MAIN MENU -------------
+if __name__ == "__main__":
+    lib = LibrarySystem()
+
+    while True:
+        print("1. Insert Book")
+        print("2. Delete Book")
+        print("3. Search Book")
+        print("4. Display Books")
+        print("5. Issue Book")
+        print("6. Return Book")
+        print("7. Undo Last Transaction")
+        print("8. View Transactions")
+        print("9. Exit")
+
+        ch = input("Enter choice: ")
+
+        if ch == '1':
+            id = int(input("Enter Book ID: "))
+            title = input("Enter Title: ")
+            author = input("Enter Author: ")
+            lib.books.insertBook(id, title, author)
+
+        elif ch == '2':
+            id = int(input("Enter Book ID to delete: "))
+            lib.books.deleteBook(id)
+
+        elif ch == '3':
+            id = int(input("Enter Book ID to search: "))
+            lib.books.searchBook(id)
+
+        elif ch == '4':
+            lib.books.displayBooks()
+
+        elif ch == '5':
+            id = int(input("Enter Book ID to issue: "))
+            lib.issueBook(id)
+
+        elif ch == '6':
+            id = int(input("Enter Book ID to return: "))
+            lib.returnBook(id)
+
+        elif ch == '7':
+            lib.undoTransaction()
+
+        elif ch == '8':
+            lib.viewTransactions()
+
+        elif ch == '9':
+            print(" Exiting system.")
+            break
+
+        else:
+            print(" Invalid choice.\n")
