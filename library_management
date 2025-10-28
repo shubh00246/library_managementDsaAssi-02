@@ -48,7 +48,7 @@ class LinkedList:
         temp = self.head
         while temp:
             if temp.book_id == book_id:
-                print(f"🔍 Found: {temp.title} by {temp.author} [{temp.status}]")
+                print(f" Found: {temp.title} by {temp.author} [{temp.status}]")
                 return temp
             temp = temp.next
         print(" Book not found.\n")
