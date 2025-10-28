@@ -1,0 +1,103 @@
+==============================
+Library Book Management System
+==============================
+
+1. Insert Book
+2. Delete Book
+3. Search Book
+4. Display Books
+5. Issue Book
+6. Return Book
+7. Undo Last Transaction
+8. View Transactions
+9. Exit
+
+Enter choice: 1
+Enter Book ID: 101
+Enter Title: Java Programming
+Enter Author: Ramesh
+Book 'Java Programming' added successfully.
+
+Enter choice: 1
+Enter Book ID: 102
+Enter Title: Data Structures
+Enter Author: John
+Book 'Data Structures' added successfully.
+
+Enter choice: 1
+Enter Book ID: 103
+Enter Title: Literature
+Enter Author: Raghav
+Book 'Literature' added successfully.
+
+Enter choice: 4
+--- Library Books ---
+ID: 101 | Title: Java Programming | Author: Ramesh | Status: Available
+ID: 102 | Title: Data Structures | Author: John | Status: Available
+ID: 103 | Title: Literature | Author: Raghav | Status: Available
+---------------------
+
+Enter choice: 3
+Enter Book ID to search: 102
+Found: Data Structures by John [Available]
+
+Enter choice: 5
+Enter Book ID to issue: 101
+Found: Java Programming by Ramesh [Available]
+Book 'Java Programming' issued.
+
+Enter choice: 5
+Enter Book ID to issue: 104
+Book not available or not found.
+
+Enter choice: 6
+Enter Book ID to return: 101
+Found: Java Programming by Ramesh [Issued]
+Book 'Java Programming' returned.
+
+Enter choice: 5
+Enter Book ID to issue: 102
+Found: Data Structures by John [Available]
+Book 'Data Structures' issued.
+
+Enter choice: 8
+--- Transaction History ---
+('issue', 102)
+('return', 101)
+('issue', 101)
+----------------------------
+
+Enter choice: 7
+Undo: Book 'Data Structures' marked as Available again.
+
+Enter choice: 8
+--- Transaction History ---
+('return', 101)
+('issue', 101)
+----------------------------
+
+Enter choice: 2
+Enter Book ID to delete: 103
+Book ID 103 deleted.
+
+Enter choice: 4
+--- Library Books ---
+ID: 101 | Title: Java Programming | Author: Ramesh | Status: Returned
+ID: 102 | Title: Data Structures | Author: John | Status: Available
+---------------------
+
+Enter choice: 3
+Enter Book ID to search: 103
+Book not found.
+
+Enter choice: 7
+Undo: Book 'Java Programming' marked as Issued again.
+
+Enter choice: 4
+--- Library Books ---
+ID: 101 | Title: Java Programming | Author: Ramesh | Status: Issued
+ID: 102 | Title: Data Structures | Author: John | Status: Available
+---------------------
+
+Enter choice: 9
+Exiting system.
