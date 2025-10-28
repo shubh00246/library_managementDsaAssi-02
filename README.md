@@ -42,10 +42,6 @@ The system uses:
 | `Stack` | Stores issue/return actions for undo |
 | `LibrarySystem` | Connects linked list and stack for all operations |
 
----
 
-## ▶️ How to Run
-1. Install [Python 3.x](https://www.python.org/downloads/)
-2. Open terminal or VS Code and run:
-   ```bash
-   python library_management.py
+
+
